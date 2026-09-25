@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RCA Learn — Rwanda Coding Academy</title>
+<meta name="description" content="An educational resource introducing Rwanda Coding Academy: learning paths, a student roadmap, and curated resources for coding, AI, cybersecurity, Linux and networking.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-950:#070c18; --navy-900:#0b1224; --navy-800:#111a33; --navy-700:#182248;
+  --blue-400:#5b9dff; --blue-500:#3b7bfa; --purple-400:#9b7dff;
+  --ink-0:#f4f7ff; --ink-300:#aab4d6; --ink-500:#7681a8;
+  --line:rgba(148,168,222,.16);
+  --radius:16px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth; scroll-padding-top:76px;}
+html,body{height:100%;}
+body{
+  background:
+    radial-gradient(1100px 600px at 85% -10%, rgba(91,157,255,.14), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(155,125,255,.10), transparent 55%),
+    var(--navy-950);
+  color:var(--ink-0);
+  font-family:'Inter',system-ui,sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; line-height:1.15; letter-spacing:-.01em;}
+a{color:inherit; text-decoration:none;}
+img{max-width:100%;}
+.wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+section{padding:100px 0; border-bottom:1px solid var(--line);}
+.eyebrow{color:var(--blue-400); font-weight:600; font-size:.95rem; margin-bottom:10px;}
+.lead{color:var(--ink-300); max-width:640px; font-size:1.05rem;}
+.btn{display:inline-flex; align-items:center; gap:8px; padding:13px 26px; border-radius:999px; font-weight:600; font-size:.95rem; cursor:pointer; border:1px solid transparent; transition:transform .15s ease, background .15s ease;}
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{background:linear-gradient(135deg,var(--blue-500),var(--purple-400)); color:#fff;}
+.btn-ghost{border-color:var(--line); color:var(--ink-0); background:rgba(255,255,255,.02);}
+.btn-ghost:hover{background:rgba(255,255,255,.06);}
+:focus-visible{outline:2px solid var(--blue-400); outline-offset:3px;}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important;}}
+
+/* NAV */
+header{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(7,12,24,.72); border-bottom:1px solid var(--line);}
+nav.wrap{display:flex; align-items:center; justify-content:space-between; padding:16px 24px;}
+.logo{display:flex; align-items:center; gap:10px; font-family:'Space Grotesk'; font-weight:700; font-size:1.1rem;}
+.logo-mark{width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,var(--blue-500),var(--purple-400)); display:flex; align-items:center; justify-content:center; font-size:.8rem;}
+.nav-links{display:flex; gap:28px; font-size:.92rem; color:var(--ink-300);}
+.nav-links a:hover{color:var(--ink-0);}
+.nav-cta{display:flex; align-items:center; gap:18px;}
+#navToggle{display:none; background:none; border:none; color:var(--ink-0); font-size:1.5rem; cursor:pointer;}
+@media(max-width:860px){
+  .nav-links{position:fixed; top:64px; left:0; right:0; background:var(--navy-900); flex-direction:column; padding:20px 24px; gap:16px; border-bottom:1px solid var(--line); transform:translateY(-130%); transition:transform .25s ease;}
+  .nav-links.open{transform:translateY(0);}
+  #navToggle{display:block;}
+  .nav-cta .btn-primary{display:none;}
+}
+
+/* HERO */
+.hero{border-bottom:1px solid var(--line); position:relative; padding:120px 0 100px; overflow:hidden;}
+.hero-inner{position:relative; z-index:2; text-align:center; max-width:760px; margin:0 auto;}
+.hero h1{font-size:clamp(2.4rem,6vw,4.2rem); margin-bottom:16px;}
+.hero .sub{font-family:'Space Grotesk'; color:var(--blue-400); font-size:1.2rem; margin-bottom:20px;}
+.hero p.lead{margin:0 auto 34px; text-align:center;}
+.hero-actions{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+.orbit-field{position:absolute; inset:0; z-index:1; pointer-events:none;}
+.dot{position:absolute; width:5px; height:5px; border-radius:50%; background:var(--blue-400); opacity:.55; animation:drift 14s ease-in-out infinite;}
+.dot:nth-child(2n){background:var(--purple-400); animation-duration:18s;}
+@keyframes drift{0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(-26px) translateX(14px);}}
+.grid-line{position:absolute; inset:0; z-index:1; background-image:linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size:64px 64px; mask-image:radial-gradient(700px 400px at 50% 20%, black, transparent 75%); opacity:.5;}
+
+/* ABOUT */
+.about-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:60px; align-items:start;}
+.about-grid h2{font-size:2rem; margin-bottom:18px;}
+.about-grid p+p{margin-top:14px;}
+.stat-col{display:grid; gap:14px;}
+.stat-card{border:1px solid var(--line); border-radius:var(--radius); padding:20px; background:rgba(255,255,255,.02);}
+.stat-card b{font-family:'Space Grotesk'; display:block; font-size:1.5rem; color:var(--blue-400);}
+@media(max-width:860px){.about-grid{grid-template-columns:1fr;}}
+
+/* SECTION HEADS */
+.sec-head{max-width:640px; margin-bottom:48px;}
+.sec-head h2{font-size:2rem;}
+
+/* PATH CARDS */
+.path-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:18px;}
+.path-card{border:1px solid var(--line); border-radius:var(--radius); padding:24px; background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0)); transition:transform .18s ease, border-color .18s ease;}
+.path-card:hover{transform:translateY(-4px); border-color:rgba(91,157,255,.4);}
+.path-icon{width:42px; height:42px; border-radius:10px; background:rgba(91,157,255,.12); display:flex; align-items:center; justify-content:center; margin-bottom:14px; color:var(--blue-400);}
+.path-card h3{font-size:1.08rem; margin-bottom:6px;}
+.path-card p{color:var(--ink-300); font-size:.9rem; margin-bottom:14px;}
+.path-card a{font-size:.85rem; font-weight:600; color:var(--blue-400);}
+
+/* RESOURCES */
+.res-controls{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:30px;}
+#resSearch{flex:1; min-width:220px; padding:12px 16px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--ink-0); font-size:.92rem;}
+.filter-chip{padding:9px 16px; border-radius:999px; border:1px solid var(--line); background:transparent; color:var(--ink-300); font-size:.85rem; cursor:pointer;}
+.filter-chip.active{background:var(--blue-500); color:#fff; border-color:var(--blue-500);}
+.res-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:18px;}
+.res-card{border:1px solid var(--line); border-radius:var(--radius); padding:22px; background:rgba(255,255,255,.02);}
+.res-card h3{font-size:1.02rem; margin-bottom:6px;}
+.res-card p{color:var(--ink-300); font-size:.88rem; margin-bottom:10px;}
+.res-tags{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;}
+.res-tag{font-size:.72rem; padding:3px 9px; border-radius:999px; background:rgba(155,125,255,.14); color:var(--purple-400);}
+.res-card .btn-ghost{padding:8px 16px; font-size:.82rem;}
+.res-empty{color:var(--ink-500); padding:30px 0;}
+
+/* ROADMAP */
+.roadmap{position:relative; max-width:520px; margin:0 auto;}
+.roadmap::before{content:"";position:absolute; left:19px; top:8px; bottom:8px; width:2px; background:linear-gradient(var(--blue-500),var(--purple-400));}
+.rm-step{position:relative; padding:0 0 40px 56px;}
+.rm-step:last-child{padding-bottom:0;}
+.rm-dot{position:absolute; left:6px; top:2px; width:28px; height:28px; border-radius:50%; background:var(--navy-900); border:2px solid var(--blue-400); display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:700; color:var(--blue-400);}
+.rm-step h4{font-size:1.05rem; margin-bottom:4px;}
+.rm-step p{color:var(--ink-300); font-size:.88rem;}
+
+/* PROJECTS */
+.proj-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:20px;}
+.proj-card{border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:rgba(255,255,255,.02);}
+.proj-thumb{height:110px; background:linear-gradient(135deg,var(--navy-700),var(--navy-800)); position:relative;}
+.proj-thumb::after{content:attr(data-emoji); position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:2rem;}
+.proj-body{padding:20px;}
+.proj-body h3{font-size:1.02rem; margin-bottom:6px;}
+.proj-body p{color:var(--ink-300); font-size:.88rem; margin-bottom:12px;}
+.proj-tech{display:flex; gap:6px; flex-wrap:wrap;}
+.proj-tech span{font-size:.72rem; color:var(--ink-500); border:1px solid var(--line); padding:3px 8px; border-radius:999px;}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--line);}
+.faq-q{width:100%; text-align:left; background:none; border:none; color:var(--ink-0); font-family:'Space Grotesk'; font-size:1rem; padding:20px 4px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;}
+.faq-q .plus{transition:transform .2s ease; color:var(--blue-400);}
+.faq-item.open .plus{transform:rotate(45deg);}
+.faq-a{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+.faq-a p{color:var(--ink-300); padding:0 4px 20px; font-size:.92rem;}
+
+/* FOOTER */
+footer{padding:60px 0 30px;}
+.foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px; margin-bottom:40px;}
+.foot-grid h4{font-size:.85rem; color:var(--ink-500); margin-bottom:14px; font-weight:600;}
+.foot-grid ul{list-style:none; display:grid; gap:10px;}
+.foot-grid a{color:var(--ink-300); font-size:.9rem;}
+.foot-grid a:hover{color:var(--ink-0);}
+.foot-note{color:var(--ink-500); font-size:.82rem; border-top:1px solid var(--line); padding-top:24px;}
+@media(max-width:760px){.foot-grid{grid-template-columns:1fr 1fr;}}
+
+.reveal{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease;}
+.reveal.in{opacity:1; transform:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo"><span class="logo-mark">RC</span>RCA Learn</div>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About RCA</a>
+      <a href="#paths">Learning Paths</a>
+      <a href="#resources">Resources</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#projects">Projects</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#resources" class="btn btn-primary">Start Learning</a>
+      <button id="navToggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="grid-line" aria-hidden="true"></div>
+  <div class="orbit-field" id="orbitField" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="sub">Learn Today. Build Tomorrow.</div>
+    <h1>Rwanda Coding Academy</h1>
+    <p class="hero-sub" style="font-family:'Space Grotesk'; color:var(--ink-300); font-size:1.15rem; margin-bottom:18px;">Learn. Build. Innovate.</p>
+    <p class="lead">An independent learning companion for students exploring Rwanda Coding Academy's world — coding, artificial intelligence, cybersecurity, networking, Linux and web development — with a clear path from first steps to real projects.</p>
+    <div class="hero-actions">
+      <a href="#about" class="btn btn-primary">Explore RCA</a>
+      <a href="#resources" class="btn btn-ghost">Start Learning</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="eyebrow">About RCA</div>
+      <h2>A national academy built for the technology generation</h2>
+      <p>Rwanda Coding Academy is a specialized secondary institution dedicated to training young Rwandans in software engineering and computer science, giving students a rigorous, hands-on foundation in how modern technology is built.</p>
+      <p>Technology education matters because it turns students from consumers of digital tools into creators of them — able to build software, secure systems, and design the infrastructure that Rwanda's economy will run on.</p>
+      <p>Through structured study and continuous practice, students at RCA develop programming, problem-solving, systems thinking and collaboration skills that carry directly into university study and the technology workforce.</p>
+    </div>
+    <div class="stat-col">
+      <div class="stat-card"><b>Learn</b>Foundational and advanced computing knowledge, taught from first principles.</div>
+      <div class="stat-card"><b>Build</b>Real software projects that turn theory into working products.</div>
+      <div class="stat-card"><b>Collaborate</b>Teamwork, code review and shared problem-solving as daily practice.</div>
+      <div class="stat-card"><b>Innovate</b>Applying new tools — AI included — to Rwanda's own challenges.</div>
+    </div>
+  </div>
+</section>
+
+<section id="paths">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Learning Paths</div>
+      <h2>Ten directions to specialize in</h2>
+    </div>
+    <div class="path-grid" id="pathGrid"></div>
+  </div>
+</section>
+
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Where Can I Learn?</div>
+      <h2>A searchable resource library</h2>
+    </div>
+    <div class="res-controls">
+      <input id="resSearch" type="text" placeholder="Search resources — e.g. Python, Linux, networking…">
+    </div>
+    <div class="res-controls" id="filterChips"></div>
+    <div class="res-grid" id="resGrid"></div>
+    <p class="res-empty" id="resEmpty" style="display:none;">No resources match that search — try a different term or filter.</p>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Student Roadmap</div>
+      <h2>One order that works for most beginners</h2>
+    </div>
+    <div class="roadmap" id="roadmapList"></div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Build Something</div>
+      <h2>Projects worth building as you learn</h2>
+    </div>
+    <div class="proj-grid" id="projGrid"></div>
+  </div>
+</section>
+
+<section id="faq" style="border-bottom:none;">
+  <div class="wrap" style="max-width:760px;">
+    <div class="sec-head reveal">
+      <div class="eyebrow">FAQ</div>
+      <h2>Common questions</h2>
+    </div>
+    <div id="faqList"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo" style="margin-bottom:12px;"><span class="logo-mark">RC</span>RCA Learn</div>
+        <p style="color:var(--ink-300); font-size:.9rem; max-width:280px;">A learning companion for students exploring coding, AI, cybersecurity and networking alongside Rwanda Coding Academy.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul><li><a href="#about">About RCA</a></li><li><a href="#paths">Learning Paths</a></li><li><a href="#roadmap">Roadmap</a></li><li><a href="#faq">FAQ</a></li></ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul><li><a href="https://www.freecodecamp.org" target="_blank" rel="noopener">freeCodeCamp</a></li><li><a href="https://developer.mozilla.org" target="_blank" rel="noopener">MDN Web Docs</a></li><li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li><li><a href="https://www.netacad.com" target="_blank" rel="noopener">Cisco NetAcad</a></li></ul>
+      </div>
+      <div>
+        <h4>Community</h4>
+        <ul><li><a href="https://stackoverflow.com" target="_blank" rel="noopener">Stack Overflow</a></li><li><a href="https://dev.to" target="_blank" rel="noopener">DEV Community</a></li></ul>
+      </div>
+    </div>
+    <p class="foot-note">© 2026 RCA Learn. This is an independent educational resource and is not an official Rwanda Coding Academy website unless officially authorized. &nbsp;·&nbsp; Learn Today. Build Tomorrow.</p>
+  </div>
+</footer>
+
+<script>
+// ---------- Nav toggle ----------
+const navToggle=document.getElementById('navToggle'), navLinks=document.getElementById('navLinks');
+navToggle.addEventListener('click',()=>navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
+
+// ---------- Floating particles ----------
+const field=document.getElementById('orbitField');
+for(let i=0;i<22;i++){
+  const d=document.createElement('div');
+  d.className='dot';
+  d.style.left=Math.random()*100+'%';
+  d.style.top=Math.random()*100+'%';
+  d.style.animationDelay=(Math.random()*6)+'s';
+  field.appendChild(d);
+}
+
+// ---------- Scroll reveal ----------
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// ---------- Learning Paths data ----------
+const paths=[
+ ["Computer Basics","Hardware, operating systems and how a computer actually works, day to day."],
+ ["Programming","Variables, logic, functions and the building blocks every language shares."],
+ ["Web Development","HTML, CSS and JavaScript to design and build real websites."],
+ ["Artificial Intelligence","Machine learning fundamentals and how intelligent systems are trained."],
+ ["Cybersecurity","How systems are attacked, defended, and kept trustworthy."],
+ ["Linux","The command line, file systems and servers that power most of the internet."],
+ ["Networking","How devices talk to each other — from local networks to the internet."],
+ ["Databases","Storing, querying and modelling data that applications depend on."],
+ ["Software Development","Turning code into maintainable products, from design to deployment."],
+ ["Embedded Systems","Programming the small devices and sensors inside physical hardware."],
+];
+const pathGrid=document.getElementById('pathGrid');
+paths.forEach(([t,d])=>{
+  pathGrid.insertAdjacentHTML('beforeend',`<div class="path-card reveal in"><div class="path-icon">◆</div><h3>${t}</h3><p>${d}</p><a href="#resources">Learn More →</a></div>`);
+});
+
+// ---------- Resources data ----------
+const resources=[
+ ["freeCodeCamp","Full coding curriculum with certifications in web dev, Python and more.","Beginner",["Coding","Web Development"],"https://www.freecodecamp.org"],
+ ["W3Schools","Bite-sized tutorials and live editors for HTML, CSS, JS and more.","Beginner",["Coding","Web Development"],"https://www.w3schools.com"],
+ ["MDN Web Docs","The authoritative reference for HTML, CSS and JavaScript.","Intermediate",["Web Development","Coding"],"https://developer.mozilla.org"],
+ ["GitHub","Where developers host code, collaborate, and build a portfolio.","Beginner",["Coding"],"https://github.com"],
+ ["Python Documentation","The official guide and reference for the Python language.","Intermediate",["Coding","AI"],"https://docs.python.org/3/"],
+ ["Linux Documentation Project","Guides and how-tos for learning the Linux operating system.","Intermediate",["Linux"],"https://tldp.org"],
+ ["Cisco Networking Academy","Free and paid courses covering networking fundamentals to security.","Beginner",["Networking","Cybersecurity"],"https://www.netacad.com"],
+ ["Microsoft Learn","Free, structured learning paths across development, cloud and AI.","Beginner",["Coding","AI"],"https://learn.microsoft.com"],
+ ["Coursera","University-taught courses in computer science, AI and cybersecurity.","Intermediate",["AI","Cybersecurity"],"https://www.coursera.org"],
+ ["edX","University-backed courses, including free computer science tracks.","Intermediate",["Coding","AI"],"https://www.edx.org"],
+ ["YouTube — freeCodeCamp.org","Long-form, free video courses on nearly every technology topic.","Beginner",["Coding","Linux"],"https://www.youtube.com/@freecodecamp"],
+];
+const cats=["All","Beginner","Intermediate","Advanced","Coding","AI","Cybersecurity","Linux","Web Development","Networking"];
+let activeChip="All", query="";
+const chipsEl=document.getElementById('filterChips');
+cats.forEach(c=>{
+  const b=document.createElement('button');
+  b.className='filter-chip'+(c==="All"?" active":"");
+  b.textContent=c;
+  b.addEventListener('click',()=>{activeChip=c; chipsEl.querySelectorAll('.filter-chip').forEach(x=>x.classList.remove('active')); b.classList.add('active'); renderRes();});
+  chipsEl.appendChild(b);
+});
+document.getElementById('resSearch').addEventListener('input',e=>{query=e.target.value.toLowerCase(); renderRes();});
+const resGrid=document.getElementById('resGrid'), resEmpty=document.getElementById('resEmpty');
+function renderRes(){
+  const filtered=resources.filter(r=>{
+    const [name,desc,level,tags]=r;
+    const matchChip=activeChip==="All"||level===activeChip||tags.includes(activeChip);
+    const matchQuery=!query||name.toLowerCase().includes(query)||desc.toLowerCase().includes(query)||tags.join(' ').toLowerCase().includes(query);
+    return matchChip&&matchQuery;
+  });
+  resGrid.style.display=filtered.length?'grid':'none';
+  resEmpty.style.display=filtered.length?'none':'block';
+  resGrid.innerHTML=filtered.map(([name,desc,level,tags,url])=>`
+    <div class="res-card">
+      <h3>${name}</h3>
+      <p>${desc}</p>
+      <div class="res-tags"><span class="res-tag">${level}</span>${tags.map(t=>`<span class="res-tag">${t}</span>`).join('')}</div>
+      <a class="btn btn-ghost" href="${url}" target="_blank" rel="noopener">Visit site</a>
+    </div>`).join('');
+}
+renderRes();
+
+// ---------- Roadmap ----------
+const roadmap=["Computer Basics","Linux & Terminal","HTML & CSS","JavaScript","Python","Git & GitHub","Databases","Networking","Cybersecurity / AI / Software Development","Build Real Projects"];
+document.getElementById('roadmapList').innerHTML=roadmap.map((s,i)=>`<div class="rm-step reveal in"><div class="rm-dot">${i+1}</div><h4>${s}</h4><p>Stage ${i+1} of the path — build this before moving on.</p></div>`).join('');
+
+// ---------- Projects ----------
+const projects=[
+ ["Personal Portfolio","Showcase your skills and projects with your own site.","HTML, CSS, JS","🗂️"],
+ ["Calculator","A working calculator to practice logic and interface design.","JavaScript","🧮"],
+ ["Rwanda Tourism Website","A site promoting Rwanda's destinations and culture.","HTML, CSS, JS","🏞️"],
+ ["Environmental Protection Website","Raise awareness about sustainability and conservation.","HTML, CSS","🌱"],
+ ["Engineering Company Website","A professional site for a fictional engineering firm.","HTML, CSS, JS","🏗️"],
+ ["AI Assistant","A simple chatbot that answers common questions.","Python","🤖"],
+ ["Cybersecurity Lab","A safe environment to practice basic security concepts.","Linux","🛡️"],
+ ["Student Management System","Track students, grades and attendance in one app.","Python, SQL","🗃️"],
+];
+document.getElementById('projGrid').innerHTML=projects.map(([t,d,tech,emoji])=>`
+  <div class="proj-card">
+    <div class="proj-thumb" data-emoji="${emoji}"></div>
+    <div class="proj-body">
+      <h3>${t}</h3><p>${d}</p>
+      <div class="proj-tech">${tech.split(', ').map(x=>`<span>${x}</span>`).join('')}</div>
+    </div>
+  </div>`).join('');
+
+// ---------- FAQ ----------
+const faqs=[
+ ["What is Rwanda Coding Academy?","RCA is a specialized secondary school in Rwanda focused on training students in software engineering and computer science."],
+ ["What can students learn?","Programming, web development, AI, cybersecurity, Linux, networking, databases and embedded systems, among other technology skills."],
+ ["Where can beginners start?","Start with Computer Basics, then move into the command line and HTML/CSS — see the Roadmap section above."],
+ ["What programming languages should I learn?","Python and JavaScript are strong starting points — Python for logic and AI, JavaScript for the web."],
+ ["What is GitHub?","A platform for hosting code, tracking changes with Git, and collaborating with other developers."],
+ ["How can I learn Linux?","Practice using the terminal directly, and follow structured guides like the Linux Documentation Project."],
+ ["How can I start learning AI?","Build a solid base in Python and math first, then move into machine learning courses such as those on Coursera or edX."],
+];
+document.getElementById('faqList').innerHTML=faqs.map((f,i)=>`
+  <div class="faq-item" id="faq${i}">
+    <button class="faq-q">${f[0]}<span class="plus">+</span></button>
+    <div class="faq-a"><p>${f[1]}</p></div>
+  </div>`).join('');
+document.querySelectorAll('.faq-item').forEach(item=>{
+  const q=item.querySelector('.faq-q'), a=item.querySelector('.faq-a');
+  q.addEventListener('click',()=>{
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(o=>{o.classList.remove('open'); o.querySelector('.faq-a').style.maxHeight=null;});
+    if(!isOpen){item.classList.add('open'); a.style.maxHeight=a.scrollHeight+'px';}
+  });
+});
+</script>
+</body>
+</html>
